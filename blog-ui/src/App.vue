@@ -4,10 +4,16 @@
       <h2>View Post</h2>
       <el-tag type="success">{{latestPosts > 0 ? latestPosts + ' new posts' : 'no new posts'}}</el-tag>
     </header>
-    <new-post :authors="authors"></new-post>
+    <new-post :authors="authors" v-if="formVisisble" @saved="refreshPosts"></new-post>
     <posts :posts="currentPosts" :authors="authors"></posts>
-    <el-pagination background layout="prev, pager, next" :total="posts.length" :page-size="2" @current-change="handleCurrentChange">
-</el-pagination>
+    <section class="controls">
+      <el-pagination background 
+                    layout="prev, pager, next" 
+                    :total="posts.length" :page-size="2" 
+                    @current-change="handleCurrentChange">
+      </el-pagination>
+      <el-button type="primary" icon="el-icon-plus" @click="formVisisble = !formVisisble">New post</el-button>
+    </section>
   </div>
 </template>
 <script>
@@ -28,6 +34,7 @@ export default {
       authors: [],
       latestPosts: 0,
       page: 1,
+      formVisisble: false
     }
   },
   created ()
@@ -37,7 +44,6 @@ export default {
       getAuthors(),
       getNewPostsCount()
     ]).then(([posts, authors, latestPosts]) => {
-      console.log('done');
       this.posts = posts;
       this.authors = authors;
       this.latestPosts = latestPosts;
@@ -47,6 +53,13 @@ export default {
     handleCurrentChange (page)
     {
       this.page = page;
+    },
+    refreshPosts ()
+    {
+      getPosts().then((posts) =>
+      {
+        this.posts = posts;
+      });
     }
   },
   computed: {
@@ -61,16 +74,19 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   width: 600px;
   margin: 30px auto;
 }
-header {
+header, .controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.controls {
+  margin-top: 20px;
 }
 </style>
