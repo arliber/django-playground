@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.core.serializers import serialize
 
 def posts(request):
-    posts_serialized = serialize('json', Post.objects.all())
+    posts_serialized = serialize('json', Post.objects.order_by('-pub_date').all())
     return HttpResponse(posts_serialized, content_type='application/json')    
 
 
