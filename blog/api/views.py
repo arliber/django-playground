@@ -5,12 +5,12 @@ from django.core.serializers import serialize
 
 def posts(request):
     posts_serialized = serialize('json', Post.objects.all())
-    return JsonResponse(posts_serialized, safe=False)
+    return HttpResponse(posts_serialized, content_type='application/json')    
 
 
 def authors(request):
-    posts_serialized = serialize('json', Post.objects.all())
-    return JsonResponse(posts_serialized, safe=False)
+    authors_serialized = serialize('json', Author.objects.all())
+    return HttpResponse(authors_serialized, content_type='application/json') 
 
 
 def new_post(request):
@@ -22,8 +22,9 @@ def new_post(request):
     except ():
         return JsonResponse({'error': 'unable to save post'})
     else:
-        return index(request)
+        return posts(request)
 
 
 def recently_published_posts(request):
-    return JsonResponse({'count': 6}) 
+    return JsonResponse({'count': 6}, safe=False) 
+    
