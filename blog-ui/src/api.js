@@ -38,9 +38,14 @@ export function getAuthors ()
   });
 }
 
-export function savePost (formData)
+export function savePost (bodyFormData)
 {
-
+  return customAxios({
+    method: 'post',
+    url: '/new-post',
+    data: bodyFormData,
+    config: { headers: {'Content-Type': 'multipart/form-data' }}
+  });
 }
 
 export function getNewPostsCount ()
