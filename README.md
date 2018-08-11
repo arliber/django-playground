@@ -1,4 +1,6 @@
-## Development
+![Screenshot](screenshot.png)
+
+## Backend
 
 > Tested with Python 3.6
 
@@ -10,7 +12,7 @@ Start dev server:
 
 Everytime a models is changed - run `python manage.py migrate ` and `python manage.py makemigrations polls`
 
-## Mistakes
+### Mistakes
 
 Software development has three main aspects: features, delivery time, quallity
 
@@ -25,3 +27,21 @@ How much? here is a list of known mistakes:
 4. posts endpoint returns all post so pagination must be done in clientside
 5. using sqlite - shuld use MySQL/Postgres
 6. posts endpoint return auatrho id and not the name so lookup must be done in client side
+7. latest articles enpoint is static
+8. no test
+9. no API endpoints documentation
+10. folder structure is not optimal
+
+## Client side
+
+> Tested with Node 10.x
+
+Start dev server:
+1. Make sure backend is runnin (above)
+2. Run `npm run serve`
+
+### Mistakes
+1. No Vuex
+2. No Vue router
+3. ESLint is not strict enough
+4. Pagination is entirely local
